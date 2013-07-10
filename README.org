@@ -1,0 +1,52 @@
+* Pseudo-namespaces for Emacs Lisp
+
+  One drawback of Emacs Lisp versus other modern Lisps is the global
+  namespace. As a result, many packages prefix every symbol with the
+  package name to avoid clashing with other packages or Emacs itself.
+
+  Pseudo-namespaces builds on this, providing a convenient mechanism
+  for scoping expressions.
+
+** Example
+
+#+BEGIN_SRC emacs-lisp
+
+  ;; These symbols exist in the `hello' namespace
+  (defconst hello/greeting "Hello, %s")
+
+  (defun hello/greet (who)
+    (format hello/greeting who))
+
+  ;; This code can refer to anything in `hello/' without qualifying it.
+  (with-ns hello
+    (greet (user-full-name)))
+
+#+END_SRC
+
+   Inside the body of =with-ns=, symbols in the =hello= namespace may
+   be referred to without their prefix. Care must be taken when
+   referring to namespaced symbols at definition time, as the scoping
+   doesn’t work unless the =with-ns= macro is used, which can lead to
+   unexpected behavior.
+
+   Within =with-ns=, the =*ns*= symbol is bound to the value of the
+   current namespace.
+
+** Limitations
+
+   If you use non-qualified symbols in your definitions, these will
+   not work outside a =with-ns= block, as the binding to the
+   namespace-scoped symbol does not exist.
+
+   There is currently no way to access shadowed global symbols.
+
+   Symbols with both the function and value cells set don’t work right.
+
+** Internals
+
+   Internally, the =with-ns= macro examines =obarray= to locate
+   symbols in the global namespace matching the supplied namespace
+   prefix, which it then aliases to the unqualified symbols with
+   =macrolet= and =symbol-macrolet=. The helpers
+   =nspace-make-function-thunk= and =nspace-make-symbol-thunk= create
+   the structures necessary for the =macrolet= arglists.
