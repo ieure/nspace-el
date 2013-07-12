@@ -85,7 +85,8 @@
   (let* ((symfuncs (nspace-make-thunks ns))
          (syms (car symfuncs))
          (funcs (cadr symfuncs)))
-    `(let ((*ns* ',ns))
+    `(let ((*ns* ',ns)
+           (max-lisp-eval-depth (* 10 max-lisp-eval-depth)))
        (macrolet ,funcs
          (symbol-macrolet ,syms
            ,@body)))))
