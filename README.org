@@ -40,8 +40,6 @@
 
    There is currently no way to access shadowed global symbols.
 
-   Symbols with both the function and value cells set don’t work right.
-
 ** Internals
 
    Internally, the =with-ns= macro examines =obarray= to locate

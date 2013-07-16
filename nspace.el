@@ -73,7 +73,7 @@
 
    Returns a list of (SYM-THUNKS FUN-THUNKS)."
   (let ((syms (nspace-symbols ns)))
-    (list (mapcar 'nspace-make-symbol-thunk (remove-if 'fboundp syms))
+    (list (mapcar 'nspace-make-symbol-thunk syms)
           (mapcar 'nspace-make-function-thunk
                   (remove-if-not 'fboundp syms)))))
 
