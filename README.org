@@ -24,10 +24,11 @@
 #+END_SRC
 
    Inside the body of =with-ns=, symbols in the =hello= namespace may
-   be referred to without their prefix. Care must be taken when
-   referring to namespaced symbols at definition time, as the scoping
-   doesn’t work unless the =with-ns= macro is used, which can lead to
-   unexpected behavior.
+   be referred to without their prefix. Because this scoping only
+   works inside the =with=ns= macro, care must be taken to refer to
+   fully-qualified symbols in the namespaced function declarations
+   themselves. That is, nspace.el is helpful for /evaluating/
+   namespaced code, but not /writing/ it.
 
    Within =with-ns=, the =*ns*= symbol is bound to the value of the
    current namespace.
