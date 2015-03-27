@@ -1,8 +1,9 @@
 ;;; nspace.el --- Pseudo-namespaces for Emacs Lisp
 
-;; Copyright (C) 2013 Ian Eure
+;; Copyright (C) 2013, 2015 Ian Eure
 
 ;; Author: Ian Eure <ian.eure@gmail.com>
+;; Version: 0.1.0
 ;; Keywords: lisp, data
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -90,6 +91,7 @@
        (macrolet ,funcs
          (symbol-macrolet ,syms
            ,@body)))))
+
 (put 'with-ns 'lisp-indent-function 1)
 
 (provide 'nspace)
