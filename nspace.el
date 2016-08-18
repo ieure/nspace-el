@@ -1,6 +1,6 @@
 ;;; nspace.el --- Pseudo-namespaces for Emacs Lisp
 
-;; Copyright (C) 2013, 2015 Ian Eure
+;; Copyright (C) 2013, 2015, 2016 Ian Eure
 
 ;; Author: Ian Eure <ian.eure@gmail.com>
 ;; Version: 0.1.0
@@ -87,7 +87,8 @@
          (syms (car symfuncs))
          (funcs (cadr symfuncs)))
     `(let ((*ns* ',ns)
-           (max-lisp-eval-depth (* 10 max-lisp-eval-depth)))
+           (max-lisp-eval-depth (* 10 max-lisp-eval-depth))
+           (max-specpdl-size (* 10 max-specpdl-size)))
        (macrolet ,funcs
          (symbol-macrolet ,syms
            ,@body)))))
